@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.amorepacific.repository.statistics.StatisticsDao">
+	
+	<select id="findList" resultType="HashMap">
+		select extract(MONTH from irt.meeting_DT) "month",
+		nvl(count(extract(MONTH from ir.meeting_DT)),0) "cnt"
+		from IR_MEETING_MANAGEMENT_TEMP irt left join IR_MEETING_MANAGEMENT ir 
+		on to_char(irt.meeting_dt,'YYYY-MM') = to_char(ir.meeting_dt,'YYYY-MM')
+		group by extract(MONTH from irt.meeting_DT)
+		order by extract(MONTH from irt.meeting_DT) asc
+	</select>
+	<select id="findList_2018" resultType="HashMap">
+		select extract(MONTH from irt.MEETING_DT) "month",
+		nvl(count(extract(MONTH from ir.MEETING_DT)),0) "cnt"
+		from IR_MEETING_MANAGEMENT_temp irt left join IR_MEETING_MANAGEMENT ir 
+		on extract(Month from ir.meeting_dt) = extract(Month from irt.meeting_dt) 
+		and extract(Year from ir.meeting_dt) = extract(year from irt.meeting_dt)
+    	where extract(year FROM irt.Meeting_DT) = '2018'
+		group by extract(MONTH from irt.MEETING_DT)
+		order by extract(MONTH from irt.MEETING_DT) asc
+	</select>
+	<select id="findList_2019" resultType="HashMap">
+		select extract(MONTH from irt.MEETING_DT) "month",
+		nvl(count(extract(MONTH from ir.MEETING_DT)),0) "cnt"
+		from IR_MEETING_MANAGEMENT_temp irt left join IR_MEETING_MANAGEMENT ir 
+		on extract(Month from ir.meeting_dt) = extract(Month from irt.meeting_dt) 
+		and extract(Year from ir.meeting_dt) = extract(year from irt.meeting_dt)
+   		where extract(year FROM irt.Meeting_DT) = '2019'
+		group by extract(MONTH from irt.MEETING_DT)
+		order by extract(MONTH from irt.MEETING_DT) asc
+	</select> 
+</mapper>
